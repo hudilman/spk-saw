@@ -1,0 +1,510 @@
+<!-- Main Content -->
+<div id="content">
+
+	<!-- Begin Page Content -->
+	<div class="container-fluid">
+
+		<!-- Page Heading -->
+		<div class="d-sm-flex align-items-center justify-content-between mb-4">
+			<h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+		</div>
+		<?php if(is_role('admin')): ?>
+		<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <!-- Topbar Search -->
+            <form action="<?php echo base_url('dashboard'); ?>" method="GET" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100" style="width: 100%;">
+                <div class="input-group">
+                    <select name="project" class="form-control" required id="">
+                            <?php foreach($list_project as $pj){
+								if($pj->token_project == $this->input->get('project')){
+									echo "<option value='".$pj->token_project."' selected>".$pj->name_project."</option>";
+								}else{
+									echo "<option value='".$pj->token_project."'>".$pj->name_project."</option>";
+								}
+                                
+                            } ?>
+							
+                    </select>
+
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </nav>
+		<!-- Content Row -->
+		<div class="row">
+
+			<!-- Earnings (Monthly) Card Example -->
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-primary shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+									Total Benefisiary</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+									<?php foreach($benefisiary as $bn){
+										echo number_format($bn->total_penerima);
+									} ?>
+									
+								</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-users fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Earnings (Monthly) Card Example -->
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-success shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+								TOTAL PAID Benefisiary
+								</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+								<?php foreach($benefisiary as $bn){
+										echo number_format($bn->total_paid);
+									} ?>
+									
+								</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Earnings (Monthly) Card Example -->
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-info shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+								TOTAL UNPAID BENEFISIARY
+								</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+								<?php foreach($benefisiary as $bn){
+										echo number_format($bn->total_unpaid);
+									} ?>
+									
+								</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-users fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Pending Requests Card Example -->
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-warning shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+								TOTAL PAID
+								</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+								<?php foreach($benefisiary as $bn){
+										echo "$". number_format($bn->total_paid*$bn->nominal_perorang);
+									} ?>
+									
+								</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-warning shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+								The Remainings Funds
+								</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+								<?php foreach($benefisiary as $l){
+
+										$total_paid = ($l->total_paid*$l->nominal_perorang);
+                                                
+										if($total_paid == 0){
+											$total = 0;
+										}else{
+											$total = $l->saldo - $total_paid;
+										}
+										echo "$".$total;
+									} ?>
+									
+								</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-warning shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+								Total Agent
+								</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+								<?php foreach($agent as $l){
+										echo $l->total_agent;
+									} ?>
+									
+								</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <h1>ADMIN</h1> -->
+		<?php elseif(is_role('agent')): ?>
+		<!-- Content Row -->
+		<div class="row">
+
+			<!-- Earnings (Monthly) Card Example -->
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-primary shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+									Total Benefisiary</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+									<!-- <?php foreach($benefisiary as $bn){
+										echo number_format($bn->total_penerima);
+									} ?> -->
+									0
+								</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-users fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Earnings (Monthly) Card Example -->
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-success shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+								TOTAL PAID Benefisiary
+								</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+								<!-- <?php foreach($benefisiary as $bn){
+										echo number_format($bn->total_paid);
+									} ?> -->
+									0
+								</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Earnings (Monthly) Card Example -->
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-info shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+								TOTAL UNPAID BENEFISIARY
+								</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+								<!-- <?php foreach($benefisiary as $bn){
+										echo number_format($bn->total_unpaid);
+									} ?> -->
+									0
+								</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-users fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Pending Requests Card Example -->
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-warning shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+								TOTAL PAID
+								</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+								<!-- <?php foreach($benefisiary as $bn){
+										echo "$". number_format($bn->total_paid*$bn->nominal_perorang);
+									} ?> -->
+									0
+								</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-warning shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+								The Remainings Funds
+								</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+								<!-- <?php foreach($benefisiary as $l){
+
+										$total_paid = ($l->total_paid*$l->nominal_perorang);
+                                                
+										if($total_paid == 0){
+											$total = 0;
+										}else{
+											$total = $l->saldo - $total_paid;
+										}
+										echo "$".$total;
+									} ?> -->
+									0
+								</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php elseif(is_role('user')): ?>
+		<h1>User</h1>
+		<?php elseif(is_role('partner')): ?>
+		<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <!-- Topbar Search -->
+            <form action="<?php echo base_url('dashboard'); ?>" method="GET" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100" style="width: 100%;">
+                <div class="input-group">
+                    <select name="project" class="form-control" required id="">
+                            <!-- <?php foreach($list_project as $pj){
+								if($pj->token_project == $this->input->get('project')){
+									echo "<option value='".$pj->token_project."' selected>".$pj->name_project."</option>";
+								}else{
+									echo "<option value='".$pj->token_project."'>".$pj->name_project."</option>";
+								}
+                                
+                            } ?> -->
+							0
+                    </select>
+
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </nav>
+		<div class="row">
+
+			<!-- Earnings (Monthly) Card Example -->
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-primary shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+									Total Benefisiary</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+									<!-- <?php foreach($benefisiary as $bn){
+										echo number_format($bn->total_penerima);
+									} ?> -->
+									0
+								</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-users fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Earnings (Monthly) Card Example -->
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-success shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+								TOTAL PAID Benefisiary
+								</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+								<!-- <?php foreach($benefisiary as $bn){
+										echo number_format($bn->total_paid);
+									} ?> -->
+									0
+								</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Earnings (Monthly) Card Example -->
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-info shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+								TOTAL UNPAID BENEFISIARY
+								</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+								<!-- <?php foreach($benefisiary as $bn){
+										echo number_format($bn->total_unpaid);
+									} ?> -->
+									0
+								</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-users fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Pending Requests Card Example -->
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-warning shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+								TOTAL PAID
+								</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+								<!-- <?php foreach($benefisiary as $bn){
+										echo "$". number_format($bn->total_paid*$bn->nominal_perorang);
+									} ?> -->
+									0
+								</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-md-6 mb-4">
+				<div class="card border-left-warning shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+								The Remainings Funds
+								</div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800">
+								<!-- <?php foreach($benefisiary as $l){
+
+										$total_paid = ($l->total_paid*$l->nominal_perorang);
+                                                
+										if($total_paid == 0){
+											$total = 0;
+										}else{
+											$total = $l->saldo - $total_paid;
+										}
+										echo "$".$total;
+									} ?> -->
+									0
+								</div>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php endif; ?>
+
+		<!-- Content Row -->
+
+		<!-- <div class="row">
+
+            
+            <div class="col-xl-12 col-lg-12">
+                <div class="card shadow mb-4">
+                    
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary"><?php echo $this->lang->line('payment_history'); ?></h6>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header"><?php echo ucwords($this->lang->line('data')); ?></div>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#"><?php echo ucwords($this->lang->line('today')); ?></a>
+                                <a class="dropdown-item" href="#"><?php echo ucwords($this->lang->line('weekly')); ?></a>
+                                <a class="dropdown-item" href="#"><?php echo ucwords($this->lang->line('monthly')); ?></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <h1>Test</h1>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+	</div>
+	<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
