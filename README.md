@@ -1,4 +1,4 @@
-![image](https://github.com/hudilman/spk-saw/assets/58804916/fc2c7a6b-ef05-4829-b8cd-d5a98772d115)# Laporan Tugas UAS TESTING QA - Mohamad Ilman Huda
+# Laporan Tugas UAS TESTING QA - Mohamad Ilman Huda
 
 ## Biodata
 Nama : Mohamad Ilman huda \
@@ -10,8 +10,9 @@ username : admin
 password : admin
 
 ## Image Result
-![login](https://github.com/hudilman/spk-saw/login.JPG?raw=true)
-![dashboard](https://github.com/hudilman/spk-saw/dashboard.JPG?raw=true)
+![image](https://github.com/hudilman/spk-saw/assets/58804916/fc2c7a6b-ef05-4829-b8cd-d5a98772d115)
+![image](https://github.com/hudilman/spk-saw/assets/58804916/440bb70f-40b5-42c2-aec4-34d35ea02e9c)
+
 
 ## Langkah 1: Unduh CodeIgniter
 Kunjungi situs resmi CodeIgniter untuk mengunduh versi terbaru:
